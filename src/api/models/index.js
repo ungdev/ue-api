@@ -1,52 +1,41 @@
 module.exports = function(sequelize) {
-  const User = sequelize.import(`${__dirname}/user`)
-  const Info = sequelize.import(`${__dirname}/info`)
-  const Team = sequelize.import(`${__dirname}/team`)
-  const Permission = sequelize.import(`${__dirname}/permission`)
-  const Spotlight = sequelize.import(`${__dirname}/spotlight`)
-  const AskingUser = sequelize.import(`${__dirname}/askingUser`)
-  const Order = sequelize.import(`${__dirname}/order`)
-  const Message = sequelize.import(`${__dirname}/message`)
-  const Conversation = sequelize.import(`${__dirname}/conversation`)
-  const Network = sequelize.import(`${__dirname}/network`)
-  const Deck = sequelize.import(`${__dirname}/deck`)
-  const State = sequelize.import(`${__dirname}/state`)
+  const UE = sequelize.import(`${__dirname}/ue`)
+  const Version = sequelize.import(`${__dirname}/version`)
+  const Curriculum = sequelize.import(`${__dirname}/curriculum`)
+  const Attribut = sequelize.import(`${__dirname}/attribut`)
+  const AttributVersion = sequelize.import(`${__dirname}/attribut_version`)
+  const Period = sequelize.import(`${__dirname}/period`)
+  const PeriodVersion = sequelize.import(`${__dirname}/period_version`)
+  const Degree = sequelize.import(`${__dirname}/degree`)
+  const Required = sequelize.import(`${__dirname}/required`)
 
-  User.belongsTo(Team)
-  Team.hasMany(User)
 
-  Order.belongsTo(User)
-  User.hasMany(Order)
+  // link Version to UE
+  Version.belongsTo(UE)
+  UE.hasMany(Version)
 
-  Network.belongsTo(User)
-  User.hasMany(Network)
+  // link Degree to Version
+  Degree.belongsTo(Version)
+  Version.hasMany(Degree)
+
+  // link Curriculum to UE
+  Curriculum.belongsTo(UE)
+  UE.hasMany(Curriculum)
   
-  Deck.belongsTo(Team) //we attach decks to the user team
-  Team.hasMany(Deck)
+  // link Curriculum to each other to make a tree
+  Curriculum.belongsTo(Curriculum, { as: 'parent' })
 
-  Team.belongsTo(Spotlight)
-  Spotlight.hasMany(Team)
+  // link Required to Version
+  Required.belongsTo(Version, { as: 'ue' })
+  Required.belongsTo(Version, { as: 'ue_needed' })
 
-  Permission.belongsTo(User)
-  User.hasOne(Permission)
-  
-  State.belongsTo(Spotlight)
-  Spotlight.hasMany(State)
+  // link Period to Version
+  Period.belongsToMany(Version, { through: PeriodVersion })
+  Version.belongsToMany(Period, { through: PeriodVersion })
 
-  User.belongsToMany(Team, { through: AskingUser, as: 'RequestedTeam' })
-  Team.belongsToMany(User, { through: AskingUser, as: 'AskingUser' })
+  // link attributs to versions through attribut_version
+  Attribut.belongsToMany(Version, { through: AttributVersion, as: 'version' })
+  Version.belongsToMany(Attribut, { through: AttributVersion, as: 'attribut' })
 
-  Message.belongsTo(User, {as: 'From', foreignKey: 'senderId'})
-  Message.belongsTo(User, {as: 'To', foreignKey: 'receiverId'})
-
-  User.hasMany(Message, {as: 'From', foreignKey: 'senderId'})
-  User.hasMany(Message, {as: 'To', foreignKey: 'receiverId'})
-
-  Message.belongsTo(Conversation)
-  Conversation.hasMany(Message)
-
-  Conversation.belongsTo(User, {as: 'User1', foreignKey: 'user1'})
-  Conversation.belongsTo(User, {as: 'User2', foreignKey: 'user2'})
-
-  return { User, Team, Spotlight, AskingUser, Info, Order, Permission, Message, Conversation, Network, Deck, State }
+  return { UE, Version, Curriculum, Attribut, AttributVersion }
 }

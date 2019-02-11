@@ -1,4 +1,6 @@
-# UTT Arena API
+# UE API
+
+API pour la gestion du guide des UEs de l'Université de Technologie de Troyes
 
 ## Requirements
 
@@ -8,19 +10,19 @@
 ## Installation
 
 ```
-git clone git@github.com:ungdev/arena.utt.fr-api.git
+git clone 
 # or
-git clone https://github.com/ungdev/arena.utt.fr-api.git
+git clone 
 
-cd arena.utt.fr-api
+cd ue-api
 yarn
 ```
 
 ## Database
 
 ```
-# create the databse 'arena', should be in utf8 not utf8mb4, otherwise it wont work
-CREATE DATABASE arena CHARACTER SET utf8;
+# create the databse 'ue', should be in utf8 not utf8mb4, otherwise it wont work
+CREATE DATABASE ue CHARACTER SET utf8;
 ```
 
 ## Configuration
@@ -30,7 +32,7 @@ CREATE DATABASE arena CHARACTER SET utf8;
 cp .env .env.local
 # makes your changes in .env.local, which will not be pushed
 nano .env.local
-# you should change ARENA_DB for your database and ARENA_API_DISABLE_LOGIN to enable login
+# you should change DB settings for your database
 ```
 
 
@@ -51,15 +53,13 @@ arena.utt.fr-api/
 ├── src/                          # base directory
 │   ├── api/                         # api files
 │   │   ├── controllers/                # endpoints controllers
-│   │   ├── live/                       # socket.io controllers
 │   │   ├── middlewares/                # endpoints middlewares
 │   │   ├── models/                     # database models
 │   │   └── utils/                      # utils files
-│   ├── app.js                       # create express server
+│   ├── main.js                       # create express server
 │   ├── database.js                  # create sequelize connection
 │   ├── env.js                       # convert .env and .env.local to JSON
 │   ├── index.js                     # entry point
-│   └── socket.js                    # create socket.io server
 ├── .editorconfig                 # define your editor options
 ├── .env                          # global configuration
 └── .env.local                    # override global configuration (not pushed to repository)
