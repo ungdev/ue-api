@@ -5,7 +5,7 @@ const errorHandler = require('../../utils/errorHandler')
  *
  * Response:
  * [
- *    { id, ... }, ...
+ *    { id, name, code }, ...
  * ]
  */
 module.exports = app => {
@@ -14,7 +14,10 @@ module.exports = app => {
     const { UE } = req.app.locals.models
 
     try {
-      let ues = await UE.findAll()
+      let ues = await UE.findAll({
+        attributes: ['id', 'name', 'code'],
+        order: [['name', 'ASC']] // order by name ascendant
+      })
       return res
         .status(200)
         .json(ues)
