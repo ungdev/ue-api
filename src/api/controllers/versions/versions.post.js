@@ -3,15 +3,15 @@ const { check } = require('express-validator/check')
 const validateBody = require('../../middlewares/validateBody')
 
 /**
- * POST /ues
+ * POST /ues/:ueid/versions
  * 
  * Body : 
  * 
- * { code, name }
+ * { title, goals, programme, ECTS }
  *
  * Response:
  * [
- *    { id, code, name, updatedAt, createdAt }, ...
+ *    { id, title, goals, programme, ECTS, updatedAt, createdAt }, ...
  * ]
  */
 module.exports = app => {

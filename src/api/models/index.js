@@ -24,7 +24,8 @@ module.exports = function(sequelize) {
   Version.belongsToMany(Curriculum, { through: CurriculumVersion, as: 'curriculum' })
   
   // link Curriculum to each other to make a tree
-  Curriculum.belongsTo(Curriculum, { as: 'parent' })
+  Curriculum.belongsTo(Curriculum, { foreignKey: 'parent' })
+  Curriculum.hasMany(Curriculum, { foreignKey: 'parent' })
 
   // link Required to Version
   Required.belongsTo(Version, { as: 'ue' })

@@ -10,9 +10,9 @@ const validateBody = require('../../middlewares/validateBody')
  * { code, name }
  *
  * Response:
- * [
- *    { id, code, name, updatedAt, createdAt }, ...
- * ]
+ * {
+ *    id, code, name, updatedAt, createdAt
+ * }
  */
 module.exports = app => {
 
