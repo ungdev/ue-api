@@ -15,7 +15,7 @@ const validateBody = require("../../middlewares/validateBody")
  * }
  */
 module.exports = app => {
-  app.put("/attributes/:id", [check("name").exist(), validateBody()])
+  app.put("/attributes/:id", [check("name").exists(), validateBody()])
   app.put("/attributes/:id", async (req, res) => {
     const { Attribute } = req.app.locals.models
 

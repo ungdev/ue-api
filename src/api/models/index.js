@@ -23,8 +23,8 @@ module.exports = function(sequelize) {
   Curriculum.hasMany(Curriculum, { foreignKey: 'parent' })
 
   // link Required to Version
-  Required.belongsTo(Version, { as: 'ue' })
-  Required.belongsTo(Version, { as: 'ue_needed' })
+  UE.belongsToMany(Version, { through: Required })
+  Version.belongsToMany(UE, { through: Required })
 
   // link Period to Version
   Period.belongsToMany(Version, { through: PeriodVersion })

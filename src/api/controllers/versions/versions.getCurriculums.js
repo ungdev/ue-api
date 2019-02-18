@@ -19,7 +19,7 @@ module.exports = app => {
         where: {
           versionId: req.params.id
         },
-        attributes: ['id', 'curriculumId', 'versionId']
+        attributes: ['curriculumId']
       })
       return res
         .status(200)

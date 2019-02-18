@@ -3,11 +3,11 @@ const { check } = require('express-validator/check')
 const validateBody = require('../../middlewares/validateBody')
 
 /**
- * POST /versions/:id/attributes
+ * POST /versions/:id/requireds
  * 
  * Body : 
  * 
- * { attributeId }
+ * { ueId, importance }
  *
  * Response:
  * [
@@ -16,24 +16,25 @@ const validateBody = require('../../middlewares/validateBody')
  */
 module.exports = app => {
 
-  app.post('/versions/:id/attributes', [
-    check('attributeId')
+  app.post('/versions/:id/requireds', [
+    check('ueId')
       .exists(),
-    check('value')
-      .optional(),
+    check('importance')
+      .isNumeric()
+      .exists(),
     validateBody()
   ])
-  app.post('/versions/:id/attributes', async (req, res) => {
-    const { Version, Attribute } = req.app.locals.models
+  app.post('/versions/:id/requireds', async (req, res) => {
+    const { UE, Version } = req.app.locals.models
 
     try {
-      const attribute = await Attribute.findById(req.body.attributeId)
-      if (!attribute)
-        return res.status(404).json("Attribute not found").end()
       const version = await Version.findById(req.params.id)
       if (!version)
         return res.status(404).json("Version not found").end()
-      await version.addAttribute(ue, { through: { value: req.body.value } })
+      const ue = await UE.findById(req.body.ueId)
+      if (!ue)
+        return res.status(404).json("UE not found").end()
+      await version.addUe(ue, { through: { importance: req.body.importance } })
       return res
         .status(200)
         .json(version)
