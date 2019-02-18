@@ -7,11 +7,7 @@ const errorHandler = require('../../utils/errorHandler')
  * [
  *    {
  *      id,
- *      name,
- *      code,
- *      versions : [{
- *        id, 
- *      }, ...]
+ *      createdAt,
  *     }, ...
  * ]
  */
@@ -22,7 +18,7 @@ module.exports = app => {
 
     try {
       let ues = await Version.findAll({
-        attributes: ['id', 'title', 'createdAt'],
+        attributes: ['id', 'createdAt', 'deprecatedAt'],
         where: {
           ueId: req.params.id
         },
