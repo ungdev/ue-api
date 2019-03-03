@@ -34,7 +34,7 @@ module.exports = app => {
       const ue = await UE.findById(req.body.ueId)
       if (!ue)
         return res.status(404).json("UE not found").end()
-      await version.addUe(ue, { through: { importance: req.body.importance } })
+      await version.addRequired(ue, { through: { importance: req.body.importance } })
       return res
         .status(200)
         .json(version)

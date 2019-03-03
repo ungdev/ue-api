@@ -8,6 +8,7 @@ const errorHandler = require('../../utils/errorHandler')
  *    {
  *      id,
  *      createdAt,
+ *      deprecatedAt,
  *     }, ...
  * ]
  */

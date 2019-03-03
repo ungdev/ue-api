@@ -15,24 +15,24 @@ module.exports = function(sequelize) {
   UE.hasMany(Version)
 
   // link Curriculum to Version
-  Curriculum.belongsToMany(Version, { through: CurriculumVersion, as: 'version' })
-  Version.belongsToMany(Curriculum, { through: CurriculumVersion, as: 'curriculum' })
+  Curriculum.belongsToMany(Version, { through: CurriculumVersion, as: 'versions' })
+  Version.belongsToMany(Curriculum, { through: CurriculumVersion, as: 'curriculums' })
   
   // link Curriculum to each other to make a tree
   Curriculum.belongsTo(Curriculum, { foreignKey: 'parent' })
   Curriculum.hasMany(Curriculum, { foreignKey: 'parent' })
 
   // link Required to Version
-  UE.belongsToMany(Version, { through: Required })
-  Version.belongsToMany(UE, { through: Required })
+  UE.belongsToMany(Version, { through: Required, as: 'requiredsTo' })
+  Version.belongsToMany(UE, { through: Required, as: 'requireds' })
 
   // link Period to Version
-  Period.belongsToMany(Version, { through: PeriodVersion })
-  Version.belongsToMany(Period, { through: PeriodVersion })
+  Period.belongsToMany(Version, { through: PeriodVersion, as: 'versions' })
+  Version.belongsToMany(Period, { through: PeriodVersion, as: 'periods' })
 
   // link attributs to versions through attribut_version
-  Attribute.belongsToMany(Version, { through: AttributeVersion, as: 'version' })
-  Version.belongsToMany(Attribute, { through: AttributeVersion, as: 'attribute' })
+  Attribute.belongsToMany(Version, { through: AttributeVersion, as: 'versions' })
+  Version.belongsToMany(Attribute, { through: AttributeVersion, as: 'attributes' })
 
   return {
     UE,
