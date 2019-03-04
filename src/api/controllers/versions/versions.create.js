@@ -64,25 +64,6 @@ module.exports = app => {
         programme,
         ECTS
       })
-      if (periods.length > 0) {
-        await Promise.all(
-          periods.map(async periodId => {
-            let period = await Period.findById(periodId)
-            if (period) await version.addPeriod(period)
-          })
-        )
-      }
-      if (requireds.length > 0) {
-        await Promise.all(
-          requireds.map(async requirement => {
-            const ue = await UE.findById(requirement.ueId)
-            if (ue)
-              await version.addUe(ue, {
-                through: { importance: requirement.importance }
-              })
-          })
-        )
-      }
       if (attributes.length > 0) {
         await Promise.all(
           attributes.map(async att => {
@@ -102,14 +83,35 @@ module.exports = app => {
           })
         )
       }
+      if (periods.length > 0) {
+        await Promise.all(
+          periods.map(async periodId => {
+            let period = await Period.findById(periodId)
+            if (period) await version.addPeriod(period)
+          })
+        )
+      }
+      if (requireds.length > 0) {
+        await Promise.all(
+          requireds.map(async requirement => {
+            const ue = await UE.findById(requirement.id)
+            if (ue)
+              await version.addRequired(ue, {
+                through: { importance: requirement.importance }
+              })
+          })
+        )
+      }
       let latestVersion = await Version.findOne({
         where: {
           ueId: ue.id,
           deprecatedAt: null
         }
       })
-      latestVersion.deprecatedAt = version.createdAt
-      await latestVersion.save()
+      if (latestVersion) {
+        latestVersion.deprecatedAt = version.createdAt
+        await latestVersion.save()
+      }
       await ue.addVersion(version)
       return res
         .status(200)
