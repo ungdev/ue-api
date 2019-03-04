@@ -20,7 +20,9 @@ module.exports = app => {
     const { Curriculum } = req.app.locals.models
 
     try {
-      let curriculums = await Curriculum.findAll()
+      let curriculums = await Curriculum.findAll({
+        attributes:['id', 'name', 'parent']
+      })
       return res
         .status(200)
         .json(curriculums)

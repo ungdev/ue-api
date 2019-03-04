@@ -19,7 +19,9 @@ module.exports = app => {
     const { Attribute } = req.app.locals.models
 
     try {
-      let attributes = await Attribute.findAll()
+      let attributes = await Attribute.findAll({
+        attributes: ['id', 'name']
+      })
       return res
         .status(200)
         .json(attributes)

@@ -7,19 +7,18 @@ const errorHandler = require('../../utils/errorHandler')
  * [
  *    {
  *      id,
- *      name,
- *      createdAt,
- *      updatedAt
+ *      name
  *    },...
  * ]
  */
 module.exports = app => {
-
   app.get('/periods', async (req, res) => {
     const { Period } = req.app.locals.models
 
     try {
-      let periods = await Period.findAll()
+      let periods = await Period.findAll({
+        attributes: ['id', 'name']
+      })
       return res
         .status(200)
         .json(periods)
