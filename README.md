@@ -49,18 +49,23 @@ yarn lint   # prettier lint
 ## Structure
 
 ```
-arena.utt.fr-api/
-├── src/                          # base directory
-│   ├── api/                         # api files
-│   │   ├── controllers/                # endpoints controllers
-│   │   ├── middlewares/                # endpoints middlewares
-│   │   ├── models/                     # database models
-│   │   └── utils/                      # utils files
-│   ├── main.js                       # create express server
-│   ├── database.js                  # create sequelize connection
-│   ├── env.js                       # convert .env and .env.local to JSON
-│   ├── index.js                     # entry point
-├── .editorconfig                 # define your editor options
-├── .env                          # global configuration
-└── .env.local                    # override global configuration (not pushed to repository)
+.
+├── bin
+│   └── start.js          # prod entry point, launches src/index.js
+├── src
+│   ├── api
+│   │   ├── controllers   # routes
+│   │   ├── middlewares   # middlewares, mostly to restrict routes
+│   │   ├── models        # models for sequelize, define DB tables
+│   │   └── utils         # utilities, like libraries or plugins
+│   ├── database.js       # config and launch database
+│   ├── env.js            # add .env variables to process.env
+│   ├── index.js          # application entry point
+│   └── main.js           # core codes
+├── .env                  # env variables
+├── LICENSE               # license
+├── README.md             # this file
+├── package.json          # define project and dependencies
+├── tslint.json           # linting
+└── yarn.lock             # yarn file
 ```
