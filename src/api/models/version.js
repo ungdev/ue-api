@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    title: { type: DataTypes.STRING },
-    goals: { type: DataTypes.STRING },
-    programme: { type: DataTypes.STRING },
+    title: { type: DataTypes.TEXT },
+    goals: { type: DataTypes.TEXT },
+    programme: { type: DataTypes.TEXT },
     ECTS: { type: DataTypes.INTEGER },
     deprecatedAt: { type: DataTypes.DATE }
   })
