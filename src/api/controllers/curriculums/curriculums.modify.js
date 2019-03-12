@@ -21,7 +21,7 @@ module.exports = app => {
 
     try {
       const { name, parentId } = req.body
-      if(!parentId && !name)
+      if(!parentId && !name) // both can't be null at the same time
         return res
           .status(400)
           .json("Missing params")

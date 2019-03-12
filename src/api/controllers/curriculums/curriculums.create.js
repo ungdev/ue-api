@@ -37,7 +37,7 @@ module.exports = app => {
         await parent.addCurriculum(curriculum)
       return res
         .status(200)
-        .json({curriculum, parent, parentId})
+        .json(curriculum)
         .end()
     } catch (err) {
       errorHandler(err, res)
