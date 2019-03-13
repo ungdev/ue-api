@@ -21,6 +21,13 @@ module.exports = app => {
       let TD = await Attribute.findOne({ where: { name: 'TD' } })
       let TP = await Attribute.findOne({ where: { name: 'TP' } })
       let THE = await Attribute.findOne({ where: { name: 'THE' } })
+      let CS = await Attribute.findOne({ where: { name: 'CS' } })
+      let TM = await Attribute.findOne({ where: { name: 'TM' } })
+      let ST = await Attribute.findOne({ where: { name: 'ST' } })
+      let EC = await Attribute.findOne({ where: { name: 'EC' } })
+      let ME = await Attribute.findOne({ where: { name: 'ME' } })
+      let HT = await Attribute.findOne({ where: { name: 'HT' } })
+      let PM = await Attribute.findOne({ where: { name: 'PM' } })
       for (let index = 0; index < doc.length; index++) {
         let uv = doc[index]
         let ue = await UE.create({
@@ -59,6 +66,43 @@ module.exports = app => {
             through: { value: uv.the }
           })
         }
+
+        if (uv.category === 'cs') {
+          await version.addAttribute(CS, {
+            through: { value: 'categorie' }
+          })
+        }
+        if (uv.category === 'tm') {
+          await version.addAttribute(TM, {
+            through: { value: 'categorie' }
+          })
+        }
+        if (uv.category === 'me') {
+          await version.addAttribute(ME, {
+            through: { value: 'categorie' }
+          })
+        }
+        if (uv.category === 'ct') {
+          await version.addAttribute(HT, {
+            through: { value: 'categorie' }
+          })
+        }
+        if (uv.category === 'ec') {
+          await version.addAttribute(EC, {
+            through: { value: 'categorie' }
+          })
+        }
+        if (uv.category === 'st') {
+          await version.addAttribute(ST, {
+            through: { value: 'categorie' }
+          })
+        }
+        if (uv.category === 'other') {
+          await version.addAttribute(PM, {
+            through: { value: 'categorie' }
+          })
+        }
+
         await ue.addVersion(version)
       }
       return res
